@@ -3,9 +3,15 @@ class BookList extends React.Component {
 
 
   render() {
-
+    console.log(this.props.items)
     const books = this.props.items.map(item => {
-      return <li >{item.volumeInfo.title}</li>
+      let price = '';
+      if (item.saleInfo && item.saleInfo.listPrice && item.saleInfo.listPrice.amount) {
+        price = item.saleInfo.listPrice.amount;
+      }
+      return <li>{item.volumeInfo.title} {item.volumeInfo.description} {price} {item.volumeInfo.authors} <img src={item.volumeInfo.imageLinks.thumbnail} />
+      </li>
+
     })
     return (
       <ul>{books}</ul>

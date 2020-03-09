@@ -24,17 +24,20 @@ class App extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-
-    console.log(this.state.q)
-
-
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.q}&maxResults=20`;
+    console.log(e.target.search.value)
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${e.target.search.value}&maxResults=20&filter=${e.target['book-Type'].value}&printType=${e.target['print-type'].value}`;
     console.log(this.state.q);
     fetch(url)
       .then(res => res.ok ? res.json() : Promise.reject('something broke'))
-      .then(json => this.setState({
-        books: json
-      }))
+      .then(json => {
+
+
+        this.setState({
+
+          books: json.totalItems ? json.items : []
+
+        })
+      })
       .catch(error => this.setState({ error }))
   }
 
@@ -46,23 +49,21 @@ class App extends React.Component {
             <h1>Booksearch</h1>
           </header>
           <form onSubmit={this.handleSubmit}>
-            <input type="text" name='search' onSubmit={e => {
-              this.change(e.target.value)
-            }} />
+            <input type="text" id='search' name='search' />
             <label htmlFor='search'>name to search for </label>
             <button
-              name="search" type="submit" >search</button>
+              name="search1" type="submit" >search</button>
             <label htmlFor="search">search</label>
             <select name="book-Type" id="">
-              <option value="free">not free</option>
-              <option value="not-free">free</option>
+              <option selected value="ebooks">not free</option>
+              <option value="free-ebooks">free</option>
             </select>
             <select name="print-type" id="">
-              <option value="book">book</option>
-              <option value="ebook">magazine</option>
+              <option selected value="books">book</option>
+              <option value="magazines">magazine</option>
             </select>
           </form >
-          <BookList items={this.state.books.items} />
+          <BookList items={this.state.books} />
         </div>
         }
       </main>
