@@ -4,11 +4,11 @@ class Filter extends React.Component {
 
   render() {
     return (
-      <form  >
+      <form onSubmit={this.props.handleSubmit('henry')}  >
         <input type="text" name='search' />
         <label for='search'>name to search for </label>
-        <button onClick={this.props.handleSubmit('henry')}
-          name="search" >search</button>
+        <button
+          name="search" type="submit">search</button>
         <label for="search">search</label>
         <select name="book-Type" id="">
           <option value="free">not free</option>

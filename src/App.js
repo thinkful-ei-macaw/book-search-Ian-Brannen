@@ -14,6 +14,7 @@ class App extends React.Component {
     const url = `GET https://www.googleapis.com/books/v1/volumes?q=`;
     fetch(url + search)
       .then(res => res.ok ? res.json : Promise.reject('something broke'))
+      .then(json => this.setState({ json }))
       .then(json => console.log(json))
       .catch(error => this.setState({ error }))
   }
