@@ -1,10 +1,16 @@
 import React from 'react'
-function BookList() {
+class BookList extends React.Component {
 
 
-  return (
-    <p> book list working</p>
-  )
+  render() {
+
+    const books = this.props.items.map(item => {
+      return <li >{item.volumeInfo.title}</li>
+    })
+    return (
+      <ul>{books}</ul>
+    )
+  }
 }
 
 export default BookList
